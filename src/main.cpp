@@ -75,9 +75,9 @@ int main(int argc, char** argv)
 	Dungeon::Image image;
 	image.loadFromFile("data/textures/kitten.jpg");
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixelPtr());
-
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixelPtr());
 	glActiveTexture(GL_TEXTURE0);
+
 	shaderProgram.setUniform("uniTex", 0);
 
 	bool running = true;
