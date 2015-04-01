@@ -2,6 +2,7 @@
 #include <Dungeon/Common.hpp>
 #include <Dungeon/ShaderProgram.hpp>
 #include <Dungeon/Image.hpp>
+#include <Dungeon/Texture.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -43,10 +44,10 @@ int main(int argc, char** argv)
 	glCullFace(GL_BACK);
 
 	float vertices[] = {
-		+0.5f, +0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Vertex 0
-		-0.5f, +0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // Vertex 1
-		+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Vertex 2
-		-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Vertex 3
+		+0.5f, +0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Vertex 0
+		-0.5f, +0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Vertex 1
+		+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, // Vertex 2
+		-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, // Vertex 3
 	};
 
 	GLuint vbo;
@@ -64,19 +65,10 @@ int main(int argc, char** argv)
 	shaderProgram.link();
 	shaderProgram.use();
 
-	GLuint tex;
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	Dungeon::Image image;
-	image.loadFromFile("data/textures/kitten.jpg");
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixelPtr());
-	glActiveTexture(GL_TEXTURE0);
+	Dungeon::Texture texture;
+	texture.loadFromFile("data/textures/kitten.jpg");
+	texture.bind(0);
 
 	shaderProgram.setUniform("uniTex", 0);
 
