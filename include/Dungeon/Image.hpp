@@ -40,7 +40,7 @@ namespace Dungeon
 		Format m_format;
 		UInt32 m_width;
 		UInt32 m_height;
-		UInt8* m_pixels;
+		UInt8 *m_pixels;
 	};
 }
 

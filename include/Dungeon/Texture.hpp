@@ -11,11 +11,11 @@ namespace Dungeon
 	{
 	public:
 		Texture();
-		Texture(const Image& image, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
+		Texture(const Image &image, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
 		virtual ~Texture();
 
-		bool loadFromFile(const char* filename, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
-		bool loadFromImage(const Image& image, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
+		bool loadFromFile(const char *filename, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
+		bool loadFromImage(const Image &image, GLint minMagFilter = GL_LINEAR, GLint wrapMode = GL_CLAMP_TO_EDGE);
 
 
 		void bind(GLuint position);

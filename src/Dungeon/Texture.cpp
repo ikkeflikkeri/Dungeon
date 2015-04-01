@@ -27,7 +27,7 @@ namespace Dungeon
 		glGenTextures(1, &m_object);
 	}
 
-	Texture::Texture(const Image& image, GLint minMagFilter, GLint wrapMode)
+	Texture::Texture(const Image &image, GLint minMagFilter, GLint wrapMode)
 		: m_object(0)
 		, m_width(image.getWidth())
 		, m_height(image.getHeight())
@@ -38,7 +38,12 @@ namespace Dungeon
 			throw std::runtime_error("Could not create texture from image.");
 	}
 
-	bool Texture::loadFromFile(const char* filename, GLint minMagFilter, GLint wrapMode)
+	Texture::~Texture()
+	{
+		glDeleteTextures(1, &m_object);
+	}
+
+	bool Texture::loadFromFile(const char *filename, GLint minMagFilter, GLint wrapMode)
 	{
 		Image image;
 		if (!image.loadFromFile(filename))
@@ -48,7 +53,7 @@ namespace Dungeon
 		return loadFromImage(image, minMagFilter, wrapMode);
 	}
 
-	bool Texture::loadFromImage(const Image& image, GLint minMagFilter, GLint wrapMode)
+	bool Texture::loadFromImage(const Image &image, GLint minMagFilter, GLint wrapMode)
 	{
 		if (image.getFormat() <= 0 || image.getFormat() > 4)
 			return false;
@@ -69,8 +74,6 @@ namespace Dungeon
 
 		return true;
 	}
-
-	Texture::~Texture() { glDeleteTextures(1, &m_object); }
 
 	void Texture::bind(GLuint position)
 	{
