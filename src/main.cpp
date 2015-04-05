@@ -1,62 +1,16 @@
+#include <Dungeon/OpenGL.hpp>
 #include <Dungeon/Common.hpp>
 #include <Dungeon/ShaderProgram.hpp>
 #include <Dungeon/Texture.hpp>
+#include <Dungeon/Clock.hpp>
+#include <Dungeon/TickCounter.hpp>
 
-#include <Dungeon/OpenGL.hpp>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
-
-class Clock
-{
-public:
-	double getElapsedTime() const
-	{
-		return glfwGetTime() - m_startTime;
-	}
-
-	double restart()
-	{
-		double now = glfwGetTime();
-		double elpased = now - m_startTime;
-		m_startTime = now;
-
-		return elpased;
-	}
-
-private:
-	double m_startTime = glfwGetTime();
-};
-
-class TickCounter
-{
-public:
-	bool update(double frequency)
-	{
-		bool reset = false;
-		if (m_clock.getElapsedTime() >= frequency)
-		{
-			m_tickRate = m_ticks / frequency;
-			m_ticks = 0;
-			reset = true;
-			m_clock.restart();
-		}
-
-		m_ticks++;
-
-		return reset;
-	}
-
-	std::size_t getTickRate() const { return m_tickRate; }
-
-private:
-	std::size_t m_ticks = 0;
-	std::size_t m_tickRate = 0;
-	Clock m_clock;
-};
 
 GLOBAL const int g_windowWidth = 854;
 GLOBAL const int g_windowHeight = 480;
@@ -131,8 +85,7 @@ int main(int argc, char** argv)
 	glfwHints();
 
 	glfwMakeContextCurrent(window);
-
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 
 	if (glewInit())
 		return EXIT_FAILURE;
@@ -155,20 +108,14 @@ int main(int argc, char** argv)
 
 	Dungeon::ShaderProgram shaderProgram;
 	if (!shaderProgram.attachShaderFromFile(Dungeon::ShaderType::Vertex, "data/shaders/default.vert.glsl"))
-	{
 		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
 	if (!shaderProgram.attachShaderFromFile(Dungeon::ShaderType::Fragment, "data/shaders/default.frag.glsl"))
-	{
 		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
 	shaderProgram.bindAttribLocation(0, "vertPosition");
 	shaderProgram.bindAttribLocation(1, "vertColor");
 	shaderProgram.bindAttribLocation(2, "vertTexCoord");
 	if (!shaderProgram.link())
-	{
 		throw std::runtime_error(shaderProgram.getErrorLog());
-	}
 	shaderProgram.use();
 
 	Dungeon::Texture texture;
@@ -180,7 +127,7 @@ int main(int argc, char** argv)
 	bool running = true;
 	bool fullscreen = false;
 
-	TickCounter tc;
+	Dungeon::TickCounter tc;
 
 	while (running)
 	{
