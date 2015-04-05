@@ -30,7 +30,7 @@ namespace Dungeon
 		void stopUsing() const;
 
 		bool link();
-		inline bool isLinked() const { return m_linked; };
+		bool isLinked() const { return m_linked; };
 
 		void bindAttribLocation(GLuint location, const GLchar *name);
 
@@ -45,8 +45,8 @@ namespace Dungeon
 		void setUniform(const GLchar *name, int x);
 		void setUniform(const GLchar *name, bool x);
 
-		inline GLuint getProgram() const { return m_program; }
-		inline const std::string &getErrorLog() const { return m_errorLog; }
+		GLuint getProgram() const { return m_program; }
+		const std::string &getErrorLog() const { return m_errorLog; }
 
 	private:
 		GLuint m_program;

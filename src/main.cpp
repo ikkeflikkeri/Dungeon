@@ -141,8 +141,7 @@ int main(int argc, char** argv)
 		{
 			std::cout << tc.getTickRate() << std::endl;
 			std::stringstream ss;
-			ss << g_windowTitle;
-			ss << " - ms/f: " << 1000.0 / tc.getTickRate() << "ms";
+			ss << g_windowTitle << " - ms/frame: " << 1000.0 / tc.getTickRate() << "ms";
 			glfwSetWindowTitle(window, ss.str().c_str());
 		}
 

@@ -18,7 +18,7 @@ namespace Dungeon
 			return elpased;
 		}
 
-		inline Float64 getElapsedTime() const { return glfwGetTime() - m_startTime; }
+		Float64 getElapsedTime() const { return glfwGetTime() - m_startTime; }
 
 	private:
 		Float64 m_startTime = glfwGetTime();

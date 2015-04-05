@@ -13,7 +13,7 @@ namespace Dungeon
 			Bool8 reset = false;
 			if (m_clock.getElapsedTime() >= frequency)
 			{
-				m_tickRate = m_ticks / frequency;
+				m_tickRate = (Size)(m_ticks / frequency);
 				m_ticks = 0;
 				reset = true;
 				m_clock.restart();
@@ -24,7 +24,7 @@ namespace Dungeon
 			return reset;
 		}
 
-		inline Size getTickRate() const { return m_tickRate; }
+		Size getTickRate() const { return m_tickRate; }
 
 	private:
 		Size m_ticks = 0;

@@ -26,10 +26,10 @@ namespace Dungeon
 		bool loadFromFile(const char *filename);
 		bool loadFromMemory(UInt32 width, UInt32 height, Format format, const UInt8 *pixels);
 
-		inline UInt32 getWidth() const { return m_width; }
-		inline UInt32 getHeight() const { return m_height; }
-		inline Format getFormat() const { return m_format; }
-		inline UInt8* getPixelPtr() const { return m_pixels; }
+		UInt32 getWidth() const { return m_width; }
+		UInt32 getHeight() const { return m_height; }
+		Format getFormat() const { return m_format; }
+		UInt8* getPixelPtr() const { return m_pixels; }
 
 		UInt8* getPixel(UInt32 column, UInt32 row) const;
 		void setPixel(UInt32 column, UInt32 row, const UInt32 *pixel);
