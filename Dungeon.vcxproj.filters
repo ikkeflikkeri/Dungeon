@@ -56,6 +56,9 @@
     <ClInclude Include="include\Dungeon\TickCounter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Dungeon\Math\Vector2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\default.vert.glsl" />

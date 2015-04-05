@@ -80,6 +80,7 @@
     <ClInclude Include="include\Dungeon\Clock.hpp" />
     <ClInclude Include="include\Dungeon\Common.hpp" />
     <ClInclude Include="include\Dungeon\Image.hpp" />
+    <ClInclude Include="include\Dungeon\Math\Vector2.hpp" />
     <ClInclude Include="include\Dungeon\NonCopyable.hpp" />
     <ClInclude Include="include\Dungeon\OpenGL.hpp" />
     <ClInclude Include="include\Dungeon\ShaderProgram.hpp" />
