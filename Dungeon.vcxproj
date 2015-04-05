@@ -77,12 +77,14 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Dungeon\Clock.hpp" />
     <ClInclude Include="include\Dungeon\Common.hpp" />
     <ClInclude Include="include\Dungeon\Image.hpp" />
     <ClInclude Include="include\Dungeon\NonCopyable.hpp" />
     <ClInclude Include="include\Dungeon\OpenGL.hpp" />
     <ClInclude Include="include\Dungeon\ShaderProgram.hpp" />
     <ClInclude Include="include\Dungeon\Texture.hpp" />
+    <ClInclude Include="include\Dungeon\TickCounter.hpp" />
     <ClInclude Include="include\Dungeon\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
