@@ -39,7 +39,8 @@ namespace Dungeon
 	}
 	ShaderProgram::~ShaderProgram()
 	{
-		glDeleteProgram(m_program);
+		if (m_program)
+			glDeleteProgram(m_program);
 	}
 
 	bool ShaderProgram::attachShaderFromFile(ShaderType type, const std::string &filename)
@@ -49,6 +50,9 @@ namespace Dungeon
 	}
 	bool ShaderProgram::attachShaderFromMemory(ShaderType type, const std::string &source)
 	{
+		if (!m_program)
+			m_program = glCreateProgram();
+
 		const char* shaderSource = source.c_str();
 
 		GLuint shader;
@@ -59,6 +63,28 @@ namespace Dungeon
 
 		glShaderSource(shader, 1, &shaderSource, nullptr);
 		glCompileShader(shader);
+
+		GLint status;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+		if (status == GL_FALSE)
+		{
+			std::string msg("Compile failure in shader:\n");
+
+			GLint infoLogLength;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+			char *infoLog = new char[infoLogLength + 1];
+			glGetShaderInfoLog(shader, infoLogLength, nullptr, infoLog);
+			msg.append(infoLog);
+			delete[] infoLog;
+
+			msg.append("\n");
+			m_errorLog.append(msg);
+
+			glDeleteShader(shader);
+
+			return false;
+		}
 
 		glAttachShader(m_program, shader);
 
@@ -85,9 +111,39 @@ namespace Dungeon
 
 	bool ShaderProgram::link()
 	{
+		if (!m_program)
+			m_program = glCreateProgram();
+
 		if (!isLinked())
 		{
 			glLinkProgram(m_program);
+
+			GLint status;
+			glGetProgramiv(m_program, GL_LINK_STATUS, &status);
+			if (status == GL_FALSE)
+			{
+				std::string msg("Program linking failure:\n");
+				
+				GLint infoLogLength;
+				glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &infoLogLength);
+				
+				char *infoLog = new char[infoLogLength + 1];
+				glGetProgramInfoLog(m_program, infoLogLength, nullptr, infoLog);
+				msg.append(infoLog);
+				delete[] infoLog;
+
+				glDeleteProgram(m_program);
+				m_program = 0;
+
+				msg.append("\n");
+				m_errorLog.append(msg);
+
+				glDeleteProgram(m_program);
+				m_program = 0;
+
+				m_linked = false;
+				return m_linked;
+			}
 
 			m_linked = true;
 		}
