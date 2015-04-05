@@ -19,6 +19,9 @@ namespace Dungeon
 	using Float32 = float;
 	using Float64 = double;
 
+	using Bool8 = bool;
+	using Bool32 = Int32;
+
 	using Size = std::size_t;
 }
 
