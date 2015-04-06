@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>bin</OutDir>
-    <IntDir>bin</IntDir>
+    <OutDir>bin/</OutDir>
+    <IntDir>bin/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -78,9 +78,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Dungeon\Clock.hpp" />
+    <ClInclude Include="include\Dungeon\Color.hpp" />
     <ClInclude Include="include\Dungeon\Common.hpp" />
     <ClInclude Include="include\Dungeon\Image.hpp" />
+    <ClInclude Include="include\Dungeon\Math.hpp" />
     <ClInclude Include="include\Dungeon\Math\Vector2.hpp" />
+    <ClInclude Include="include\Dungeon\Math\Vector3.hpp" />
+    <ClInclude Include="include\Dungeon\Math\Vector4.hpp" />
     <ClInclude Include="include\Dungeon\NonCopyable.hpp" />
     <ClInclude Include="include\Dungeon\OpenGL.hpp" />
     <ClInclude Include="include\Dungeon\ShaderProgram.hpp" />

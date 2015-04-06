@@ -4,6 +4,8 @@
 #include <Dungeon/Texture.hpp>
 #include <Dungeon/Clock.hpp>
 #include <Dungeon/TickCounter.hpp>
+#include <Dungeon/Math.hpp>
+#include <Dungeon/Color.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -11,6 +13,13 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+
+struct Vertex
+{
+	Dungeon::Vector2 position;
+	Dungeon::Color color;
+	Dungeon::Vector2 texCoord;
+};
 
 GLOBAL const int g_windowWidth = 854;
 GLOBAL const int g_windowHeight = 480;
@@ -24,24 +33,19 @@ INTERNAL void glfwHints()
 
 INTERNAL void render()
 {
-	glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
-	{
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *)(0));
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid *)(sizeof(Dungeon::Vector2)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *)(sizeof(Dungeon::Vector2) + sizeof(float)));
 
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(0 * sizeof(float)));
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(2 * sizeof(float)));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const GLvoid *)(5 * sizeof(float)));
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-	}
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 }
 
 INTERNAL void handleInput(GLFWwindow *window, bool *running, bool *fullscreen)
@@ -93,11 +97,11 @@ int main(int argc, char** argv)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
-	float vertices[] = {
-		+0.5f, +0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Vertex 0
-		-0.5f, +0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Vertex 1
-		+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, // Vertex 2
-		-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, // Vertex 3
+	Vertex vertices[] = {
+		{ { +0.5f, +0.5f }, { 255, 255, 255, 255 }, { 1.0f, 0.0f } }, // Vertex 0
+		{ { -0.5f, +0.5f }, { 255,   0,   0, 255 }, { 0.0f, 0.0f } }, // Vertex 1
+		{ { +0.5f, -0.5f }, {   0, 255,   0, 255 }, { 1.0f, 1.0f } }, // Vertex 2
+		{ { -0.5f, -0.5f }, {   0,   0, 255, 255 }, { 0.0f, 1.0f } }, // Vertex 3
 	};
 
 	GLuint vbo;
@@ -144,6 +148,9 @@ int main(int argc, char** argv)
 			ss << g_windowTitle << " - ms/frame: " << 1000.0 / tc.getTickRate() << "ms";
 			glfwSetWindowTitle(window, ss.str().c_str());
 		}
+
+		glClearColor(0.5f, 0.69f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		render();
 

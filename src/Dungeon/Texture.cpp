@@ -17,6 +17,7 @@ namespace Dungeon
 		case Image::Format_RGBA:
 			return (srgb ? GL_SRGB_ALPHA : GL_RGBA);
 		}
+		return NULL;
 	}
 
 	Texture::Texture()
@@ -29,8 +30,8 @@ namespace Dungeon
 
 	Texture::Texture(const Image &image, GLint minMagFilter, GLint wrapMode)
 		: m_object(0)
-		, m_width(image.getWidth())
-		, m_height(image.getHeight())
+		, m_width((GLfloat)image.getWidth())
+		, m_height((GLfloat)image.getHeight())
 	{
 		glGenTextures(1, &m_object);
 
